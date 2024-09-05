@@ -1,0 +1,28 @@
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+kind: VCluster
+metadata:
+  name: tprun-8644
+  namespace: tprun-8644
+spec:
+  controlPlaneEndpoint:
+    host: ""
+    port: 0
+  helmRelease:
+    chart:
+      name: vcluster
+      repo: https://charts.loft.sh
+      version: 0.20.0
+    values: |
+      controlPlane:
+        distro:
+          k3s:
+            enabled: true
+        statefulSet:
+          persistence:
+            volumeClaim:
+              enabled: true
+              storageClass: gp2
+      sync:
+        fromHost:
+          storageClasses:
+            enabled: true
